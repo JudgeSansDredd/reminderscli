@@ -1,4 +1,4 @@
-from gui.whiptail import wt
+from gui.whiptail import TERMINAL_WIDTH, wt
 from Reminders.Config import Config
 from Reminders.Reminder import Reminder
 
@@ -26,8 +26,17 @@ def main():
     if not proceed:
         return
 
-    reminders = Reminder.all()
-    print(reminders)
+    reminders = [
+        x[:(TERMINAL_WIDTH - 39)] + '...'
+        if len(x) > TERMINAL_WIDTH - 39
+        else x
+        for x
+        in Reminder.all()
+    ]
+
+    code = 0
+    while code == 0:
+        _, code = wt.checklist("Your checklist", reminders)
 
 if __name__ == '__main__':
     main()
