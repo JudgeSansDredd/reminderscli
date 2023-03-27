@@ -16,5 +16,4 @@ class Reminder:
 
     @staticmethod
     def all():
-        print("Reminder.all()")
         return RemindersAppApi.get_reminders()
