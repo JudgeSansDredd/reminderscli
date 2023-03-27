@@ -1,2 +1,3 @@
 py-applescript
 whiptail-dialogs
+configparser

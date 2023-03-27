@@ -1,20 +1,7 @@
-import os
+from gui.whiptail import wt
+from Reminders.Config import Config
+from Reminders.Reminder import Reminder
 
-from whiptail import Whiptail
-
-from Reminders.main import Reminders
-
-#####################
-# TERMINAL SETTINGS #
-#####################
-TERMINAL_WIDTH=os.get_terminal_size().columns
-TERMINAL_HEIGHT=os.get_terminal_size().lines
-WHIPTAIL_SETTINGS={
-    "title": "Reminders",
-    "width": TERMINAL_WIDTH - 10,
-    "height": TERMINAL_HEIGHT - 10
-}
-wt = Whiptail(**WHIPTAIL_SETTINGS)
 
 def new_reminder():
     title, code = wt.inputbox("What is the title?")
@@ -23,13 +10,24 @@ def new_reminder():
     body, code = wt.inputbox("What is the body?")
     if code:
         return
-    Reminders.new_reminder(title, body)
+    r = Reminder(title)
+    r.body = body
+    r.save()
+
+def list_reminders():
+    pass
 
 ###################
 # Main Line Logic #
 ###################
 def main():
-    new_reminder()
+    # Make sure our config file is written and has necessary info
+    proceed = Config.set_configuration()
+    if not proceed:
+        return
+
+    reminders = Reminder.all()
+    print(reminders)
 
 if __name__ == '__main__':
     main()
