@@ -13,7 +13,7 @@ class RemindersAppApi:
 
     def _get_reminders(self):
         get_reminder_script = AppleScript(path="./scripts/list_reminders.applescript")
-        get_reminder_script.run(self.default_list)
+        return get_reminder_script.run(self.default_list)
 
     @classmethod
     def new_reminder(cls, title, body):
@@ -21,4 +21,4 @@ class RemindersAppApi:
 
     @classmethod
     def get_reminders(cls):
-        cls()._get_reminders()
+        return cls()._get_reminders()
